@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Current cash balance </th>
+                <th>Grand total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ cash | usd }}</td>
+                <td>{{ grand_total | usd}}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% if transactions[0] %}
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Stocks</th>
+                    <th>Shares</th>
+                    <th>Current price</th>
+                    <th>Total value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in transactions %}
+                    <tr>
+                        <td>{{ names_list[loop.index - 1] }}</td>
+                        <td>{{ shares_list[loop.index - 1] }}</td>
+                        <td>{{ price[loop.index - 1] | usd}}</td>
+                        <td>{{ (item['shares'] * price[loop.index - 1]) | usd}}</td>
+                    </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>
+            Your portfolio is empty
+        </h2>
+    {% endif %}
+{% endblock %}
